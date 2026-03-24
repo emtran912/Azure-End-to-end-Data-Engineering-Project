@@ -3,7 +3,7 @@ A project to familarise myself with the Azure data engineering ecosystem
 
 ## 1. Project overview
 
-- **Goal**: Briefly describe the business problem (e.g., “build a scalable pipeline to ingest and transform X data for reporting”).
+- **Goal**: Build a scalable pipeline to ingest and transform  data.
 - **Scenario**: Where the data comes from, who would use the outputs.
 - **Architecture style**: Medallion (Bronze → Silver → Gold) / Delta Lake / batch + near real-time, etc.
 
