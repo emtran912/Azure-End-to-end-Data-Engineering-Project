@@ -30,6 +30,7 @@ A project to familarise myself with the Azure data engineering ecosystem
 ### Missing columns in Databricks schema (Product_Name, Year)
 - Problem: Raw CSV had 12 columns but the SQL table / ADF schema only had 10, so Databricks was missing `Product_Name` and `Year`.
 - Fix: Updated the SQL table schema, re-imported schema in ADF, reran the copy, and verified the new columns in the lake/Databricks.
+
 **What I learned**
 - Schema mismatches can happen across source files, SQL staging tables, ADF datasets, and lake outputs.
 - Fixing the schema upstream is better than patching it only in notebooks.
@@ -37,6 +38,7 @@ A project to familarise myself with the Azure data engineering ecosystem
 ### Incremental load and watermark
 - Problem: Watermark table failed to debug; incremental copy behaved like a full load and the stored procedure failed due to parameter configuration.
 - Fix: Aligned Lookup outputs (`firstRow` vs `value[0]`), corrected the `UpdateWatermarkTable` parameter mapping, and validated that row counts and `water_table.last_load` update as expected.
+
 **What I learned**
 - Incremental pipelines depend heavily on control tables and exact activity outputs.
 - Small configuration differences in ADF can change pipeline behaviour significantly.
