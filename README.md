@@ -24,3 +24,39 @@ A project to familarise myself with the Azure data engineering ecosystem
 - Azure SQL / Synapse / Power BI – serving layer
 - Delta Lake / Parquet – storage format
 - GitHub – version control and documentation
+
+- ## Issues I solved
+
+### 1. Missing columns in Databricks schema
+While working through the project, I found that the raw CSV contained two columns (`Product_Name` and `Year`) that were missing from the SQL table schema and downstream Data Factory import.
+
+**What was happening**
+- The source file had 12 columns, but the SQL table / imported schema only had 10.
+- As a result, Databricks was reading an incomplete schema.
+
+**How I fixed it**
+- Updated the SQL table schema to include the missing columns.
+- Re-imported the schema in Azure Data Factory.
+- Re-ran the copy pipeline and verified the corrected schema in Databricks.
+
+**What I learned**
+- Schema mismatches can happen across source files, SQL staging tables, ADF datasets, and lake outputs.
+- Fixing the schema upstream is better than patching it only in notebooks.
+
+### 2. Incremental load / watermark pipeline issues
+I ran into multiple issues while setting up the incremental pipeline using `water_table`, Lookup activities, and the `UpdateWatermarkTable` stored procedure.
+
+**What was happening**
+- Lookup outputs did not always match the expected structure from the tutorial (`value[0]` vs `firstRow`).
+- The watermark table sometimes held a later `Date_ID` than expected, which changed the row count copied.
+- Stored procedure parameter configuration in ADF initially failed because the parameter shape was incorrect.
+
+**How I fixed it**
+- Verified Lookup outputs directly in ADF debug runs.
+- Aligned activity expressions with the actual output structure.
+- Corrected the stored procedure parameter mapping for `UpdateWatermarkTable`.
+- Validated the incremental copy by checking copied row counts and downstream data.
+
+**What I learned**
+- Incremental pipelines depend heavily on control tables and exact activity outputs.
+- Small configuration differences in ADF can change pipeline behaviour significantly.
