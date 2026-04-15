@@ -36,8 +36,8 @@ A project to familarise myself with the Azure data engineering ecosystem
 - Fixing the schema upstream is better than patching it only in notebooks.
 
 ### Incremental load and watermark
-- Problem: Watermark table failed to debug; incremental copy behaved like a full load and the stored procedure failed due to parameter configuration.
-- Fix: Aligned Lookup outputs (`firstRow` vs `value[0]`), corrected the `UpdateWatermarkTable` parameter mapping, and validated that row counts and `water_table.last_load` update as expected.
+- Problem: Problem: Watermark table wasn’t updating correctly, so the “incremental” copy behaved like a full load and the stored procedure initially failed due to incorrect parameter configuration.
+- Fix: Aligned Lookup outputs (using the correct index to select the `Date_ID` value via `value[0]`), corrected the `UpdateWatermarkTable` parameter mapping, and validated that copied row counts and `water_table.last_load` updated as expected.
 
 **What I learned**
 - Incremental pipelines depend heavily on control tables and exact activity outputs.
